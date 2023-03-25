@@ -11,10 +11,10 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: build with maven cloud
-        run: mvn -B verify sonar:sonar -Dsonar.projectkey=azuredevopsdevsecops2023 -Dsonar.organization=azuredevopsdevsecops2023 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$(SONAR_TOKEN)
+        run: mvn -B verify sonar:sonar -Dsonar.projectkey=devsecops_githubactions -Dsonar.organization=devsecops_githubactions -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$SONAR_TOKEN
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
           
       - uses: actions/checkout@master
       - name: Run Snyk to check for SAST vulnerabilities
