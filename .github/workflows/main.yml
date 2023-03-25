@@ -3,6 +3,19 @@ jobs:
   security:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - name: setup JDK11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      - name: build with maven cloud
+        run: mvn -B verify sonar:sonar -Dsonar.projectkey=azuredevopsdevsecops2023 -Dsonar.organization=azuredevopsdevsecops2023 -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=$(SONAR_TOKEN)
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          SONAR_TOKEN: ${{secrets.SONAR_TOKEN}}
+          
       - uses: actions/checkout@master
       - name: Run Snyk to check for SAST vulnerabilities
         uses: snyk/actions/maven@master
